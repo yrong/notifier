@@ -1,0 +1,32 @@
+{
+    "name": "notifier",
+    "port":3004,
+    "perPageSize":2000,
+    "logger":{
+      "appenders": [
+        {
+          "type": "console"
+        },
+        {
+          "type": "file",
+          "filename": "notifier.log",
+          "maxLogSize": 20480,
+          "numBackups": 5
+        }
+      ],
+      "replaceConsole": true,
+      "defaultLevel":"INFO"
+    },
+    "postgres": {
+      "host": "localhost",
+      "port": 5432,
+      "database": "test",
+      "user": "postgres",
+      "password": "postgres",
+      "max": 50,
+      "idleTimeoutMillis": 3000
+    },
+    "auth":{
+      "check_token_url":"http://localhost:3002/auth/check"
+    }
+}

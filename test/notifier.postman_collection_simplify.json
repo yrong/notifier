@@ -1,0 +1,53 @@
+[
+  {
+    "name": "notification timeline search unread count=count--",
+    "method": "POST",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/search",
+    "body": {
+      "token": "{{token}}",
+      "read": false,
+      "filter": {},
+      "page": 1,
+      "per_page": 2
+    }
+  },
+  {
+    "name": "notification update status to read",
+    "method": "PUT",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/{{article_timeline_uuid}}",
+    "body": {
+      "token": "{{token}}",
+      "read": true
+    }
+  },
+  {
+    "name": "login",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+    "body": {
+      "username": "{{auth_user}}",
+      "password": "{{auth_passwd}}"
+    }
+  },
+  {
+    "name": "notification  search unread",
+    "method": "POST",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/search",
+    "body": {
+      "token": "{{token}}",
+      "read": false,
+      "filter": {},
+      "page": 1,
+      "per_page": 2
+    }
+  },
+  {
+    "name": "notification timeline update avatar",
+    "method": "PUT",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/{{article_timeline_uuid}}",
+    "body": {
+      "token": "{{token}}",
+      "avatar": "/avatar/1"
+    }
+  }
+]
