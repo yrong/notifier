@@ -2,7 +2,7 @@
   {
     "name": "notification timeline search unread count=count--",
     "method": "POST",
-    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/search",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
     "body": {
       "token": "{{token}}",
       "read": false,
@@ -12,9 +12,29 @@
     }
   },
   {
+    "name": "notification search by article_id",
+    "method": "POST",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+    "body": {
+      "token": "{{token}}",
+      "filter": {
+        "$or": [
+          {
+            "new.uuid": "{{article_2_id}}"
+          },
+          {
+            "old.uuid": "{{article_2_id}}"
+          }
+        ]
+      },
+      "page": 1,
+      "per_page": 3
+    }
+  },
+  {
     "name": "notification update status to read",
     "method": "PUT",
-    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/{{article_timeline_uuid}}",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/{{article_timeline_uuid}}",
     "body": {
       "token": "{{token}}",
       "read": true
@@ -32,22 +52,13 @@
   {
     "name": "notification  search unread",
     "method": "POST",
-    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/search",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
     "body": {
       "token": "{{token}}",
       "read": false,
       "filter": {},
       "page": 1,
-      "per_page": 2
-    }
-  },
-  {
-    "name": "notification timeline update avatar",
-    "method": "PUT",
-    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/notifications/{{article_timeline_uuid}}",
-    "body": {
-      "token": "{{token}}",
-      "avatar": "/avatar/1"
+      "per_page": 10
     }
   }
 ]
