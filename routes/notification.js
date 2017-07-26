@@ -14,7 +14,12 @@ const search_processor = async function(ctx) {
     }
     query = db_helper.buildQueryCondition(query)
     result = await model.findAndCountAll(query)
-    result.rows = _.map(result.rows,(row)=>_.omit(row,['notified_user']))
+    result.rows = _.map(result.rows,(row)=>{
+        row = _.omit(row,['notified_user'])
+        row.actor = row.user
+        delete row.user
+        return row
+    })
     ctx.body = result
 }
 
