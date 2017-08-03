@@ -4,22 +4,25 @@ const _ = require('lodash')
 const models = require('../models');
 const db_helper = require('../helper/db_helper')
 const Notification = models.NotificationName
+const resultMapping = require('../helper/resultMapping')
 
 const search_processor = async function(ctx) {
     let user_id = ctx.local.userid,
         query =_.assign({},ctx.params,ctx.query,ctx.request.body),
-        model = models[Notification], result
+        model = models[Notification], result,mapped_rows = []
     if(query.read == false){
         query.filter = _.merge(query.filter,{$not:{notified_user:{$contains:[user_id]}}})
     }
     query = db_helper.buildQueryCondition(query)
     result = await model.findAndCountAll(query)
-    result.rows = _.map(result.rows,(row)=>{
+    for (let row of result.rows){
         row = _.omit(row,['notified_user'])
         row.actor = row.user
         delete row.user
-        return row
-    })
+        row = await resultMapping.notificationMapping(row)
+        mapped_rows.push(row)
+    }
+    result.rows = mapped_rows
     ctx.body = result
 }
 

@@ -28,5 +28,11 @@
     },
     "auth":{
       "check_token_url":"http://localhost:3002/auth/check"
+    },
+    "cmdb":{
+      "base_url":"http://localhost:3001"
+    },
+    "kb":{
+      "base_url":"http://localhost:3000/KB/API/v1"
     }
 }
