@@ -32,16 +32,26 @@
     }
   },
   {
-    "name": "notification  search by type",
+    "name": "notification  search by source and type",
     "method": "POST",
     "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
     "body": {
       "token": "{{token}}",
       "filter": {
-        "type": "Router"
+        "type": "Router",
+        "source": "cmdb"
       },
       "page": 1,
       "per_page": 10
+    }
+  },
+  {
+    "name": "notification batch update status to read",
+    "method": "PUT",
+    "url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/",
+    "body": {
+      "token": "{{token}}",
+      "read": true
     }
   },
   {

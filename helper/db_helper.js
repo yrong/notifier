@@ -31,7 +31,13 @@ const buildQueryCondition = (querys) =>{
     return {where:querys.filter,order:[[sortby,order]],offset:offset,limit:per_page,raw:true};
 }
 
-module.exports = {buildQueryCondition,pool}
+const executeSql = async (sql)=>{
+    console.log('execute sql:'+sql)
+    let result = await pool.query(sql)
+    return result
+}
+
+module.exports = {buildQueryCondition,executeSql}
 
 
 

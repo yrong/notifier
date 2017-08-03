@@ -49,10 +49,19 @@ const update_processor = async function(ctx) {
     ctx.body = {}
 }
 
+const batch_update_notified_user = async function(ctx) {
+    let user_id = ctx.local.userid,update_obj = ctx.request.body
+    if(update_obj.read){
+        await db_helper.executeSql(`update "Notifications" set notified_user = notified_user || ${user_id}` )
+    }
+    ctx.body = {}
+}
+
 
 notifications.post('/',post_processor)
 notifications.put('/:uuid',update_processor)
 notifications.post('/search',search_processor)
+notifications.put('/',batch_update_notified_user)
 
 
 module.exports = notifications

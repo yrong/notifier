@@ -8,9 +8,11 @@
 		"3847f4ce-59f0-4d4d-cead-3325c670b1b5",
 		"dee52dd2-20b8-cc76-bb07-d736b64d1ea2",
 		"5ff34efd-84e4-6040-81ba-75d7e9097161",
-		"2ce0cbea-3d39-9e57-d9e6-0fb2ba9a6816"
+		"2ce0cbea-3d39-9e57-d9e6-0fb2ba9a6816",
+		"3dc57730-a284-da31-e49d-41e875aaee43"
 	],
 	"folders": [],
+	"folders_order": [],
 	"timestamp": 1500542072667,
 	"owner": "2263720",
 	"public": false,
@@ -95,12 +97,41 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"data found\"] = (jsonData.data.rows.length >= 1)",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1501079768968,
-			"name": "notification  search by type",
+			"time": 1501139849020,
+			"name": "notification  search by source and type",
 			"description": "",
 			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
 			"responses": [],
-			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n  \t\"type\":\"Router\"\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n  \t\"type\":\"Router\",\n  \t\"source\":\"cmdb\"\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+		},
+		{
+			"id": "3dc57730-a284-da31-e49d-41e875aaee43",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"update timeline status\"] = (jsonData.status === 'ok')",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1501767111075,
+			"name": "notification batch update status to read",
+			"description": "",
+			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
+			"responses": [],
+			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":true\n}\n"
 		},
 		{
 			"id": "5ff34efd-84e4-6040-81ba-75d7e9097161",
