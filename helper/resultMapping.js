@@ -20,10 +20,14 @@ const notificationObjectMapping = async function(obj) {
         obj.it_service = _.isEmpty(it_services_items)?obj.it_service:it_services_items
     }
     if(obj&&obj.article_id){
-        article = await common.apiInvoker('GET',kb_api_config.base_url,`/articles/${obj.article_id}`)
-        if(article&&article.data){
-            obj.article = article.data
-            delete obj.article_id
+        try {
+            article = await common.apiInvoker('GET', kb_api_config.base_url, `/articles/${obj.article_id}`)
+            if (article && article.data) {
+                obj.article = article.data
+                delete obj.article_id
+            }
+        }catch(err){
+            //just ignore the error
         }
     }
     return obj
