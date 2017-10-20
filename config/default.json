@@ -34,5 +34,9 @@
     },
     "kb":{
       "base_url":"http://localhost:3000/KB/API/v1"
+    },
+    "redis": {
+      "host": "localhost",
+      "port": 6379
     }
 }

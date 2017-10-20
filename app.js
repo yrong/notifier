@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const config = require('config')
 const logger = require('log4js_wrapper')
-const cmdb_cache = require('cmdb-cache')
+const scirichon_cache = require('scirichon-cache')
 /**
  * init logger
  */
@@ -60,6 +60,6 @@ notification_io.attach(app)
  */
 app.listen(config.get('port'), () => {
     console.log('server started')
-    cmdb_cache.loadAll(config.get('cmdb.base_url')+'/api')
+    scirichon_cache.loadAll(config.get('cmdb.base_url')+'/api')
 })
 

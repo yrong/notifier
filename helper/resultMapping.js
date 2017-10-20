@@ -1,4 +1,4 @@
-const cmdb_cache = require('cmdb-cache')
+const scirichon_cache = require('scirichon-cache')
 const _ = require('lodash')
 const common = require('scirichon-common')
 const config = require('config')
@@ -15,7 +15,7 @@ const notificationObjectMapping = async function(obj) {
     let it_services_items = [],article
     if(obj&&obj.it_service){
         _.each(obj.it_service,function(it_service_uuid){
-            it_services_items.push(cmdb_cache.getItemByCategoryAndID('ITService',it_service_uuid));
+            it_services_items.push(scirichon_cache.getItemByCategoryAndID('ITService',it_service_uuid));
         });
         obj.it_service = _.isEmpty(it_services_items)?obj.it_service:it_services_items
     }
