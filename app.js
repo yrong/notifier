@@ -15,8 +15,7 @@ const cors = require('kcors')
 const Static = require('koa-static')
 const mount = require('koa-mount')
 const bodyParser = require('koa-bodyparser')
-const responseWrapper = require('koa-response-wrapper')
-const check_token = require('koa-token-checker')
+const responseWrapper = require('scirichon-response-wrapper')
 const models = require('./models')
 const router = require('./routes')
 
@@ -30,7 +29,6 @@ app.use(cors({ credentials: true }))
 app.use(bodyParser())
 app.use(mount("/", convert(Static(__dirname + '/public'))))
 app.use(responseWrapper())
-app.use(check_token(config.get('auth')))
 /**
  * init orm
  */
