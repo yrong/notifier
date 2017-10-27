@@ -12,11 +12,13 @@ const notificationMapping = async function(notification){
 };
 
 const notificationObjectMapping = async function(obj) {
-    let it_services_items = [],article
-    if(obj&&obj.it_service){
-        _.each(obj.it_service,function(it_service_uuid){
-            it_services_items.push(scirichon_cache.getItemByCategoryAndID('ITService',it_service_uuid));
-        });
+    let it_services_items = [],it_services_item,article
+    if(obj&&obj.it_service&&obj.it_service.length){
+        for(let it_service_uuid of obj.it_service){
+            it_services_item = await scirichon_cache.getItemByCategoryAndID('ITService',it_service_uuid)
+            if(it_services_item)
+                it_services_items.push(it_services_item);
+        }
         obj.it_service = _.isEmpty(it_services_items)?obj.it_service:it_services_items
     }
     if(obj&&obj.article_id){
