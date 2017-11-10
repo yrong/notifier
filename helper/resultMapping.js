@@ -2,13 +2,12 @@ const scirichon_cache = require('scirichon-cache')
 const _ = require('lodash')
 const common = require('scirichon-common')
 const config = require('config')
-const kb_api_config = config.get('kb')
 
 const notificationMapping = async function(notification){
     notification.old = await notificationObjectMapping(notification.old)
     notification.new = await notificationObjectMapping(notification.new)
     notification.update = await notificationObjectMapping(notification.update)
-    return notification;
+    return common.pruneEmpty(notification);
 };
 
 const notificationObjectMapping = async function(obj) {
@@ -23,16 +22,17 @@ const notificationObjectMapping = async function(obj) {
     }
     if(obj&&obj.article_id){
         try {
-            article = await common.apiInvoker('GET', kb_api_config.base_url, `/articles/${obj.article_id}`)
-            if (article && article.data) {
-                obj.article = article.data
+            article = await common.apiInvoker('GET', `http://${config.get('privateIP')||'localhost'}:${config.get('kb.port')}`, `/KB/API/v1/articles/${obj.article_id}`)
+            article = article.data || article
+            if (article) {
+                obj.article = article
                 delete obj.article_id
             }
         }catch(err){
-            //just ignore the error
+            console.log(err.stack||err)
         }
     }
     return obj
 }
 
-module.exports = {notificationMapping: notificationMapping}
+module.exports = {notificationMapping}

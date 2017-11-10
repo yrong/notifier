@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 var mods = {};
 fs.readdirSync("node_modules")
@@ -17,7 +18,7 @@ fs.readdirSync("node_modules")
 
 var devtool = 'source-map'
 
-var entry = {server:'./app.js'}
+var entry = {server:'./app.js',sync:'./sync.js'}
 var packages = [
     {from:'config',to:'config'},{from:'models',to:'models',ignore:['index.js']},
     {from:'test/*.json'},{from:'node_modules',to:'node_modules'}
@@ -26,7 +27,7 @@ var packages = [
 var releaseDir = process.env.ReleaseDir||path.join(__dirname, 'release')
 
 var plugins = [
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJSPlugin({
         sourceMap: devtool && (devtool.indexOf("sourcemap") >= 0 || devtool.indexOf("source-map") >= 0)
     }),
     new CopyWebpackPlugin(packages, {ignore: ['*.gitignore']}),

@@ -1,230 +1,367 @@
 {
-	"id": "095beb05-3692-67ed-5f28-a345ec035b79",
-	"name": "notifier",
-	"description": "",
-	"order": [
-		"9e59759a-eb3e-eb14-c792-d213980ab024",
-		"302a158b-b583-eef8-3510-404fd79aff44",
-		"3847f4ce-59f0-4d4d-cead-3325c670b1b5",
-		"dee52dd2-20b8-cc76-bb07-d736b64d1ea2",
-		"5ff34efd-84e4-6040-81ba-75d7e9097161",
-		"2ce0cbea-3d39-9e57-d9e6-0fb2ba9a6816",
-		"3dc57730-a284-da31-e49d-41e875aaee43"
-	],
-	"folders": [],
-	"folders_order": [],
-	"timestamp": 1500542072667,
-	"owner": "2263720",
-	"public": false,
-	"requests": [
+	"info": {
+		"name": "notifier",
+		"_postman_id": "e73ea611-0e96-d341-9a0e-b6617b1aa1fa",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "2ce0cbea-3d39-9e57-d9e6-0fb2ba9a6816",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"article timeline found\"] = (jsonData.data.count == environment[\"article_timeline_unread_count\"]-1)\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1500879501839,
-			"name": "notification timeline search unread count=count--",
-			"description": "",
-			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
-			"responses": [],
-			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":false,\n  \"filter\":\n  {\n  },\n   \"page\":1,\n  \"per_page\":2\n}\n"
-		},
-		{
-			"id": "302a158b-b583-eef8-3510-404fd79aff44",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"article timeline found\"] = (jsonData.data.rows.length >= 1)",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1500631700134,
-			"name": "notification search by article_id",
-			"description": "",
-			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
-			"responses": [],
-			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{article_2_id}}\"},{\"old.uuid\": \"{{article_2_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
-		},
-		{
-			"id": "3847f4ce-59f0-4d4d-cead-3325c670b1b5",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"data found\"] = (jsonData.data.rows.length >= 1)",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1501139849020,
-			"name": "notification  search by source and type",
-			"description": "",
-			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
-			"responses": [],
-			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n  \t\"type\":\"Router\",\n  \t\"source\":\"cmdb\"\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
-		},
-		{
-			"id": "3dc57730-a284-da31-e49d-41e875aaee43",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "PUT",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"update timeline status\"] = (jsonData.status === 'ok')",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1501767111075,
-			"name": "notification batch update status to read",
-			"description": "",
-			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
-			"responses": [],
-			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":true\n}\n"
-		},
-		{
-			"id": "5ff34efd-84e4-6040-81ba-75d7e9097161",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/{{article_timeline_uuid}}",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "PUT",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"update timeline status\"] = (jsonData.status === 'ok')",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1500879491264,
-			"name": "notification update status to read",
-			"description": "",
-			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
-			"responses": [],
-			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":true\n}\n"
-		},
-		{
-			"id": "9e59759a-eb3e-eb14-c792-d213980ab024",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "Cookie",
-					"value": "token={{token}}",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1500542323241,
 			"name": "login",
-			"description": "",
-			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
-			"responses": [],
-			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}"
-		},
-		{
-			"id": "dee52dd2-20b8-cc76-bb07-d736b64d1ea2",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
+			"event": [
 				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"token found\"] = jsonData.data.token;",
+							"postman.setEnvironmentVariable(\"token\", jsonData.data.token);",
+							""
+						]
+					}
 				}
 			],
-			"url": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
-			"queryParams": [],
-			"preRequestScript": "",
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"article timeline found\"] = (jsonData.data.rows.length >= 1)\npostman.setEnvironmentVariable(\"article_timeline_uuid\", jsonData.data.rows[0].uuid);\npostman.setEnvironmentVariable(\"article_timeline_unread_count\", jsonData.data.count);",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1501078904051,
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{auth_api_host}}"
+					],
+					"port": "{{auth_api_port}}",
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add article 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"uuid found\"] = jsonData.uuid;",
+							"postman.setEnvironmentVariable(\"article_2_id\", jsonData.uuid);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\":\"{{token}}\",\n    \"title\": \"煤气费\",\n    \"it_service\": [\"{{service_dns_id}}\"],\n    \"tag\": [\"测试\",\"随机\"],\n  \"author\": \"{{auth_user_id}}\",\n  \"ref_links\": [\"https://www.baidu.com\"],\n  \"tasks\": \"测试插入\",\n  \"type\":\"Troubleshooting\",\n  \"content\":{\"description\": \"煤气费\", \"analysis\": \"煤气费\", \"solution\":\"前几天，我的邻居小伙伴突然在QQ上问我突然在不，她比我大几岁，平日里交集不算太多，这么冷不丁的来一句“在吗？”，让我误以为是骗子又来实施诈骗了\",\"workaround\": \"煤气费\"},\n  \"attachment\":[{\"href\":\"http://locahost/hello.txt\",\"size\":100,\"name\":\"hello\"},{\"href\":\"http://locahost/test.txt\",\"size\":100,\"name\":\"test\"}]\n }\n\n"
+				},
+				"url": {
+					"raw": "http://{{kb_api_host}}:{{kb_api_port}}/KB/API/v1/articles",
+					"protocol": "http",
+					"host": [
+						"{{kb_api_host}}"
+					],
+					"port": "{{kb_api_port}}",
+					"path": [
+						"KB",
+						"API",
+						"v1",
+						"articles"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "notification search by article_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"article timeline found\"] = (jsonData.rows.length >= 1)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{article_2_id}}\"},{\"old.uuid\": \"{{article_2_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "notification  search by source and type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"data found\"] = (jsonData.rows.length >= 1)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n  \t\"type\":\"Article\",\n  \t\"source\":\"kb\"\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "notification  search unread",
-			"description": "",
-			"collectionId": "095beb05-3692-67ed-5f28-a345ec035b79",
-			"responses": [],
-			"rawModeData": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":false,\n  \"filter\":\n  {\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"article timeline found\"] = (jsonData.rows.length >= 1)",
+							"postman.setEnvironmentVariable(\"article_timeline_uuid\", jsonData.rows[0].uuid);",
+							"postman.setEnvironmentVariable(\"article_timeline_unread_count\", jsonData.count);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":false,\n  \"filter\":\n  {\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "notification update status to read",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"update timeline status\"] = responseCode.code == 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":true\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/{{article_timeline_uuid}}",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"{{article_timeline_uuid}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "notification timeline search unread count=count--",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"article timeline found\"] = (jsonData.count == environment[\"article_timeline_unread_count\"]-1)",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":false,\n  \"filter\":\n  {\n  },\n   \"page\":1,\n  \"per_page\":2\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "notification batch update status to read",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"update timeline status\"] = responseCode.code == 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":true\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

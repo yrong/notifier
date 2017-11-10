@@ -14,7 +14,7 @@ const search_processor = async function(ctx) {
     if(query.read == false){
         query.filter = _.merge(query.filter,{$not:{notified_user:{$contains:[user_id]}}})
     }
-    query = db_helper.buildQueryCondition(query)
+    query = common.buildQueryCondition(query)
     result = await model.findAndCountAll(query)
     for (let row of result.rows){
         row = _.omit(row,['notified_user'])
