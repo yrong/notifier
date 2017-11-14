@@ -5,9 +5,7 @@
   "scripts": {
     "start": "NODE_ENV=production NODE_NAME=notifier node ./server.js",
     "build": "webpack",
-    "prepare": "/bin/bash ./script/prepare.sh",
     "test": "mocha",
-    "sync-schema-rebuild": "SYNC_TYPE=rebuild node sync.js",
     "sync-schema-upgrade": "SYNC_TYPE=upgrade node sync.js"
   },
   "dependencies": {
