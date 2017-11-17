@@ -55,3 +55,7 @@ schema.loadSchemas({redisOption}).then((schemas)=>{
     }
 })
 
+process.on('uncaughtException', (err) => {
+    logger.error(`Caught exception: ${err}`)
+})
+
