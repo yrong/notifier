@@ -1,5 +1,13 @@
 const config = require('config')
 const scirichon_cache = require('scirichon-cache')
+const Koa = require('koa')
+const cors = require('kcors')
+const bodyParser = require('koa-bodyparser')
+const responseWrapper = require('scirichon-response-wrapper')
+const check_token = require('scirichon-token-checker')
+const acl_checker = require('scirichon-acl-checker')
+const schema = require('redis-json-schema')
+
 /**
  * init logger
  */
@@ -7,22 +15,17 @@ const Logger = require('log4js_wrapper')
 Logger.initialize(config.get('logger'))
 const logger = Logger.getLogger()
 
-
-const Koa = require('koa')
-const cors = require('kcors')
-const bodyParser = require('koa-bodyparser')
-const responseWrapper = require('scirichon-response-wrapper')
-const check_token = require('scirichon-token-checker')
-const acl_checker = require('scirichon-acl-checker')
-const models = require('./models')
-const router = require('./routes')
-const schema = require('redis-json-schema')
-
+/**
+ * init db schema
+ */
+const db = require('sequelize-wrapper-advanced')
+db.init(config.get('postgres-notification'))
+db.NotificationName = 'Notification'
 
 /**
  * init middlewares
  */
-const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
+const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port'),dbname:'cmdb'}
 const cache_loadUrl = {cmdb_url:`http://${config.get('privateIP') || 'localhost'}:${config.get('cmdb.port')}/api`}
 const app = new Koa();
 app.use(cors({ credentials: true }))
@@ -34,10 +37,11 @@ app.use(acl_checker({redisOption}))
 /**
  * init routes
  */
+const router = require('./routes')
 app.use(router.routes())
 
 const IO = require( 'koa-socket' )
-const notification_io = new IO(models.NotificationName)
+const notification_io = new IO(db.NotificationName)
 notification_io.attach(app)
 
 /**

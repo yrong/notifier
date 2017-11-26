@@ -1,9 +1,9 @@
 const Router = require('koa-router')
-const notifications = new Router();
+const notifications = new Router()
 const _ = require('lodash')
-const models = require('../models');
+const models = require('sequelize-wrapper-advanced').models
 const db_helper = require('../helper/db_helper')
-const Notification = models.NotificationName
+const Notification = require('sequelize-wrapper-advanced').NotificationName
 const resultMapping = require('../helper/resultMapping')
 const common = require('scirichon-common')
 
