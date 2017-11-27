@@ -8,7 +8,7 @@ const resultMapping = require('../helper/resultMapping')
 const common = require('scirichon-common')
 
 const search_processor = async function(ctx) {
-    let user_id = ctx[common.TokenUserName].userid,
+    let user_id = ctx[common.TokenUserName].uuid,
         query =_.assign({},ctx.params,ctx.query,ctx.request.body),
         model = models[Notification], result,mapped_rows = []
     if(query.read == false){
@@ -35,7 +35,7 @@ const post_processor = async function(ctx) {
 }
 
 const update_processor = async function(ctx) {
-    let user_id = ctx[common.TokenUserName].userid,notified_user,obj,model=models[Notification],update_obj = ctx.request.body
+    let user_id = ctx[common.TokenUserName].uuid,notified_user,obj,model=models[Notification],update_obj = ctx.request.body
     obj = await model.findOne({
         where: {
             uuid: ctx.params.uuid
@@ -51,9 +51,9 @@ const update_processor = async function(ctx) {
 }
 
 const batch_update_notified_user = async function(ctx) {
-    let user_id = ctx[common.TokenUserName].userid,update_obj = ctx.request.body
+    let user_id = ctx[common.TokenUserName].uuid,update_obj = ctx.request.body
     if(update_obj.read){
-        await db_helper.executeSql(`update "Notifications" set notified_user = notified_user || ${user_id}` )
+        await db_helper.executeSql(`update "Notifications" set notified_user = notified_user || '{${user_id}}'` )
     }
     ctx.body = {}
 }

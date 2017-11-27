@@ -3,7 +3,8 @@ var initsql = `
 DO $$ 
         BEGIN
             BEGIN
-                ALTER TABLE "Notifications" ADD COLUMN "source" TEXT;                
+                ALTER TABLE "Notifications" ADD COLUMN "source" TEXT;  
+                ALTER TABLE "Notifications" ALTER COLUMN notified_user TYPE TEXT[];              
             EXCEPTION
                 WHEN duplicate_column THEN RAISE NOTICE 'column "source" already exists in Articles.';
             END;
@@ -20,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
             new:{type: DataTypes.JSONB},
             update:{type: DataTypes.JSONB},
             type:{type:DataTypes.STRING,allowNull: false},
-            notified_user:{type:DataTypes.ARRAY(DataTypes.INTEGER),defaultValue:[-1]},
+            notified_user:{type:DataTypes.ARRAY(DataTypes.STRING),defaultValue:["NONE"]},
             source:{type:DataTypes.STRING,allowNull: false}
         });
     Nofification.initsql = initsql;
