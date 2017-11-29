@@ -12,6 +12,11 @@ const logger = Logger.getLogger()
 const db = require('sequelize-wrapper-advanced')
 db.init(config.get('postgres-notification'))
 db.NotificationName = 'Notification'
+const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port'),dbname:process.env['CACHE_NAME']}
+const cache_url_key = `${process.env['CACHE_NAME']}_url`
+const port = config.get(`${process.env['CACHE_NAME']}.port`)
+const cache_loadUrl = {}
+cache_loadUrl[cache_url_key]=`http://${config.get('privateIP') || 'localhost'}:${port}/api`
 
 /**
  * init middlewares
@@ -24,8 +29,6 @@ const scirichon_cache = require('scirichon-cache')
 const responseWrapper = require('scirichon-response-wrapper')
 const check_token = require('scirichon-token-checker')
 const acl_checker = require('scirichon-acl-checker')
-const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port'),dbname:process.env['CACHE_NAME']}
-const cache_loadUrl = {cmdb_url:`http://${config.get('privateIP') || 'localhost'}:${config.get('cmdb.port')}/api`}
 const app = new Koa();
 app.use(cors({ credentials: true }))
 app.use(bodyParser())
