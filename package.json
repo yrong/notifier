@@ -8,7 +8,7 @@
     "build": "webpack",
     "start": "node ./server.js",
     "test": "mocha",
-    "initSchema": "initSchema"
+    "init": "initSchema"
   },
   "dependencies": {
     "kcors": "^2.1.1",
