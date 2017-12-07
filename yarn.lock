@@ -1413,11 +1413,6 @@ double-ended-queue@^2.1.0-0:
 duplexify@^3.1.2, duplexify@^3.4.2:
   version "3.5.1"
   resolved "https://registry.npmjs.org/duplexify/-/duplexify-3.5.1.tgz#4e1516be68838bc90a49994f0b39a6e5960befcd"
-  dependencies:
-    end-of-stream "^1.0.0"
-    inherits "^2.0.1"
-    readable-stream "^2.0.0"
-    stream-shift "^1.0.0"
 
 ebnf-parser@~0.1.9:
   version "0.1.10"
@@ -3023,11 +3018,6 @@ nopt@^4.0.1:
 normalize-package-data@^2.3.2:
   version "2.4.0"
   resolved "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.4.0.tgz#12f95a307d58352075a04907b84ac8be98ac012f"
-  dependencies:
-    hosted-git-info "^2.1.4"
-    is-builtin-module "^1.0.0"
-    semver "2 || 3 || 4 || 5"
-    validate-npm-package-license "^3.0.1"
 
 normalize-path@^2.0.0, normalize-path@^2.0.1:
   version "2.1.1"
@@ -3626,9 +3616,9 @@ redis-crud-fork@1.0.0-beta.8:
   version "1.0.0-beta.8"
   resolved "https://registry.npmjs.org/redis-crud-fork/-/redis-crud-fork-1.0.0-beta.8.tgz#6ff803b251f092bb7a5d108c75d24f43b30fd057"
 
-redis-json-schema@1.0.1-beta.2:
-  version "1.0.1-beta.2"
-  resolved "https://registry.npmjs.org/redis-json-schema/-/redis-json-schema-1.0.1-beta.2.tgz#f5c5d899d31f7c151c13e0e485379deb1247350b"
+redis-json-schema@1.0.1-beta.6:
+  version "1.0.1-beta.6"
+  resolved "https://registry.yarnpkg.com/redis-json-schema/-/redis-json-schema-1.0.1-beta.6.tgz#b2772f12a4030366d1ec3c7c3ee18799c46363f8"
   dependencies:
     ajv "^5.3.0"
     lodash "^4.17.4"
@@ -3854,16 +3844,16 @@ scirichon-acl-checker@1.0.1-beta.4:
     redis "^2.8.0"
     scirichon-common "1.0.1-beta.6"
 
-scirichon-cache@1.0.3-beta.8:
-  version "1.0.3-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.3-beta.8.tgz#4952aa3b20acab25ade5c2e3979776f8bff034e3"
+scirichon-cache@1.0.4-beta.4:
+  version "1.0.4-beta.4"
+  resolved "https://registry.yarnpkg.com/scirichon-cache/-/scirichon-cache-1.0.4-beta.4.tgz#a8ee7d7dd53804b2e44f7eae153d0dacee364145"
   dependencies:
     lodash "^4.17.4"
     node-cache-redis-fork "2.2.0-beta.3"
-    redis-json-schema "1.0.1-beta.2"
+    redis-json-schema "1.0.1-beta.6"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "1.0.1-beta.6"
+    scirichon-common "1.0.1-beta.7"
     uuid-validate "0.0.2"
 
 scirichon-common@1.0.1-beta.5:
@@ -3884,6 +3874,14 @@ scirichon-common@1.0.1-beta.5:
 scirichon-common@1.0.1-beta.6:
   version "1.0.1-beta.6"
   resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.1-beta.6.tgz#98f297d0a88318792b6f05fcd8327f46c7b202aa"
+  dependencies:
+    lodash "^4.17.4"
+    request "^2.81.0"
+    request-promise "^4.1.1"
+
+scirichon-common@1.0.1-beta.7:
+  version "1.0.1-beta.7"
+  resolved "https://registry.yarnpkg.com/scirichon-common/-/scirichon-common-1.0.1-beta.7.tgz#8681dfc751d4cacdc8a4c16a3b9e7f88c7c8116e"
   dependencies:
     lodash "^4.17.4"
     request "^2.81.0"
