@@ -101,7 +101,7 @@
 			"response": []
 		},
 		{
-			"name": "notification search by article_id",
+			"name": "search by article_id",
 			"event": [
 				{
 					"listen": "test",
@@ -145,7 +145,7 @@
 			"response": []
 		},
 		{
-			"name": "notification  search by source and type",
+			"name": "search by source and type",
 			"event": [
 				{
 					"listen": "test",
@@ -169,7 +169,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n  \t\"type\":\"Article\",\n  \t\"source\":\"kb\"\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"type\":\"Article\",\n    \"source\":\"kb\"\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
 				},
 				"url": {
 					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
@@ -189,18 +189,19 @@
 			"response": []
 		},
 		{
-			"name": "notification  search unread",
+			"name": "search unread",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "e033ba17-c2f7-42f6-972f-f147decddcdd",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"jsonData = jsonData.data||jsonData;",
-							"tests[\"article timeline found\"] = (jsonData.rows.length >= 1)",
-							"postman.setEnvironmentVariable(\"article_timeline_uuid\", jsonData.rows[0].uuid);",
-							"postman.setEnvironmentVariable(\"article_timeline_unread_count\", jsonData.count);"
+							"tests[\"notification found\"] = (jsonData.rows.length >= 1)",
+							"postman.setEnvironmentVariable(\"notification_id\", jsonData.rows[0].uuid);",
+							"postman.setEnvironmentVariable(\"notification_unread_count\", jsonData.count);"
 						]
 					}
 				}
@@ -235,7 +236,7 @@
 			"response": []
 		},
 		{
-			"name": "notification update status to read",
+			"name": "update status to read by uuid",
 			"event": [
 				{
 					"listen": "test",
@@ -260,7 +261,7 @@
 					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"read\":true\n}\n"
 				},
 				"url": {
-					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/{{article_timeline_uuid}}",
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/{{notification_id}}",
 					"protocol": "http",
 					"host": [
 						"{{notifier_api_host}}"
@@ -269,7 +270,7 @@
 					"path": [
 						"api",
 						"notifications",
-						"{{article_timeline_uuid}}"
+						"{{notification_id}}"
 					]
 				},
 				"description": ""
@@ -277,16 +278,17 @@
 			"response": []
 		},
 		{
-			"name": "notification timeline search unread count=count--",
+			"name": "unread count=count-- after update status",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "e3c3d9cf-fff8-4bcf-8330-e64c4e3a495f",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"jsonData = jsonData.data||jsonData;",
-							"tests[\"article timeline found\"] = (jsonData.count == environment[\"article_timeline_unread_count\"]-1)",
+							"tests[\"notification found\"] = (jsonData.count == environment[\"notification_unread_count\"]-1)",
 							""
 						]
 					}
@@ -322,7 +324,7 @@
 			"response": []
 		},
 		{
-			"name": "notification batch update status to read",
+			"name": "batch update status to read",
 			"event": [
 				{
 					"listen": "test",
@@ -357,6 +359,106 @@
 						"api",
 						"notifications",
 						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add notification",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d724a5be-d1dc-41cc-8ce6-919d78ccdb94",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"uuid found\"] = jsonData.uuid;",
+							"if(jsonData.uuid){",
+							"   postman.setEnvironmentVariable(\"notification_id\", jsonData.uuid); ",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"action\":\"create\",\n  \"new\":{\"subscriber\":\"{{auth_user_id}}\",\"occurrence_date\":1511936480773},\n  \"type\":\"Order\",\n  \"source\":\"api\",\n  \"additional\":{\"a\":1,\"b\":true}\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "search by additional",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"data found\"] = (jsonData.rows.length >= 1)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"filter\":\n  {\n    \"additional.a\": 1\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
 					]
 				},
 				"description": ""

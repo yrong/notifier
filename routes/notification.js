@@ -16,19 +16,21 @@ const search_processor = async function(ctx) {
     }
     query = common.buildQueryCondition(query)
     result = await model.findAndCountAll(query)
-    for (let row of result.rows){
-        row = _.omit(row,['notified_user'])
-        row.actor = row.user
-        delete row.user
-        row = await resultMapping.notificationMapping(row)
-        mapped_rows.push(row)
+    if(result&&result.rows){
+        for(let row of result.rows){
+            row = await resultMapping.notificationMapping(row)
+            mapped_rows.push(row)
+        }
+        result.rows = mapped_rows
     }
-    result.rows = mapped_rows
     ctx.body = result
 }
 
 const post_processor = async function(ctx) {
     let notification = ctx.request.body
+    if(!notification.user){
+        notification.user = ctx[common.TokenUserName]
+    }
     notification = await models[Notification].create(notification);
     ctx.app[Notification].broadcast(Notification,notification)
     ctx.body = {uuid: notification.uuid}

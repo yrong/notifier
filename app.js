@@ -24,7 +24,6 @@ cache_loadUrl[cache_url_key]=`http://${config.get('privateIP') || 'localhost'}:$
 const Koa = require('koa')
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
-const schema = require('redis-json-schema')
 const scirichon_cache = require('scirichon-cache')
 const responseWrapper = require('scirichon-response-wrapper')
 const check_token = require('scirichon-token-checker')
@@ -48,16 +47,9 @@ notification_io.attach(app)
 /**
  * start server
  */
-schema.loadSchemas({redisOption}).then((schemas)=>{
-    if (schemas && schemas.length) {
-        scirichon_cache.initialize({loadUrl: cache_loadUrl,redisOption})
-        app.listen(config.get('notifier.port'), () => {
-            logger.info('App started')
-        })
-    }else{
-        logger.fatal(`no schemas found,npm run init first!`)
-        process.exit(-2)
-    }
+scirichon_cache.initialize({loadUrl: cache_loadUrl,redisOption,prefix:process.env['SCHEMA_TYPE']})
+app.listen(config.get('notifier.port'), () => {
+    logger.info('App started')
 })
 
 process.on('uncaughtException', (err) => {
