@@ -2,12 +2,11 @@ var initsql = `
 
 DO $$ 
         BEGIN
+            ALTER TABLE "Notifications" ALTER COLUMN notified_user TYPE TEXT[]; 
             BEGIN
-                ALTER TABLE "Notifications" ALTER COLUMN notified_user TYPE TEXT[];
-                ALTER TABLE "Notifications" ADD COLUMN "additional" JSONB;
-                ALTER TABLE "Notifications" ADD COLUMN "source" TEXT;                 
+                ALTER TABLE "Notifications" ADD COLUMN "additional" JSONB;           
             EXCEPTION
-                WHEN duplicate_column THEN RAISE NOTICE 'column "source" already exists in Articles.';
+                WHEN duplicate_column THEN RAISE NOTICE 'column "additional" already exists in Notifications.';
             END;
         END;
   $$;  `
@@ -22,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
             new:{type: DataTypes.JSONB},
             update:{type: DataTypes.JSONB},
             type:{type:DataTypes.STRING,allowNull: false},
-            notified_user:{type:DataTypes.ARRAY(DataTypes.STRING),defaultValue:["NONE"]},
+            notified_user:{type:DataTypes.ARRAY(DataTypes.TEXT),defaultValue:["NONE"]},
             source:{type:DataTypes.STRING,allowNull: false},
             additional:{type: DataTypes.JSONB}
         });
