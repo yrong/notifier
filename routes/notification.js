@@ -8,11 +8,14 @@ const resultMapping = require('../helper/resultMapping')
 const common = require('scirichon-common')
 
 const search_processor = async function(ctx) {
-    let user_id = ctx[common.TokenUserName].uuid,
+    let user_id = ctx[common.TokenUserName].uuid,roles = ctx[common.TokenUserName].roles,
         query =_.assign({},ctx.params,ctx.query,ctx.request.body),
         model = models[Notification], result,mapped_rows = []
     if(query.read == false){
         query.filter = _.merge(query.filter,{$not:{notified_user:{$contains:[user_id]}}})
+    }
+    if(query.subscribe == true){
+        query.filter = _.merge(query.filter,{$or:[{subscribe_user:{$contains:["ALL"]}},{subscribe_user:{$contains:[user_id]}},{subscribe_role:{$contains:roles}}]})
     }
     query = common.buildQueryCondition(query)
     result = await model.findAndCountAll(query)
@@ -65,6 +68,12 @@ notifications.post('/',post_processor)
 notifications.put('/:uuid',update_processor)
 notifications.post('/search',search_processor)
 notifications.put('/',batch_update_notified_user)
+if(process.env.NODE_ENV === 'development') {
+    notifications.del('/hidden', async (ctx) => {
+        await db_helper.executeSql(`delete from "Notifications"`)
+        ctx.body = {}
+    })
+}
 
 
 module.exports = notifications

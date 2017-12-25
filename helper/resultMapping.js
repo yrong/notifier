@@ -7,11 +7,11 @@ const uuid_validator = require('uuid-validate')
 
 const notificationMapping = async function(notification){
     notification.actor = notification.user
-    notification = _.omit(notification,['notified_user','user'])
+    notification = _.omit(notification,['notified_user','user','subscribe_user','subscribe_role','updatedAt'])
     notification.old = await notificationObjectMapping(notification.old)
     notification.new = await notificationObjectMapping(notification.new)
     notification.update = await notificationObjectMapping(notification.update)
-    return common.pruneEmpty(notification);
+    return notification//common.pruneEmpty(notification);
 }
 
 const referencedObjectMapper = async (val,props)=>{

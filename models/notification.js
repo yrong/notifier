@@ -2,11 +2,15 @@ var initsql = `
 
 DO $$ 
         BEGIN
-            ALTER TABLE "Notifications" ALTER COLUMN notified_user TYPE TEXT[]; 
             BEGIN
-                ALTER TABLE "Notifications" ADD COLUMN "additional" JSONB;           
+                ALTER TABLE "Notifications" ADD COLUMN "subscribe_user" TEXT[];           
             EXCEPTION
-                WHEN duplicate_column THEN RAISE NOTICE 'column "additional" already exists in Notifications.';
+                WHEN duplicate_column THEN RAISE NOTICE 'column "subscribe_user" already exists in Notifications.';
+            END;
+            BEGIN
+                ALTER TABLE "Notifications" ADD COLUMN "subscribe_role" TEXT[];           
+            EXCEPTION
+                WHEN duplicate_column THEN RAISE NOTICE 'column "subscribe_role" already exists in Notifications.';
             END;
         END;
   $$;  `
@@ -23,7 +27,9 @@ module.exports = function (sequelize, DataTypes) {
             type:{type:DataTypes.STRING,allowNull: false},
             notified_user:{type:DataTypes.ARRAY(DataTypes.TEXT),defaultValue:["NONE"]},
             source:{type:DataTypes.STRING,allowNull: false},
-            additional:{type: DataTypes.JSONB}
+            additional:{type: DataTypes.JSONB},
+            subscribe_user:{type:DataTypes.ARRAY(DataTypes.TEXT),defaultValue:["ALL"]},
+            subscribe_role:{type:DataTypes.ARRAY(DataTypes.TEXT),defaultValue:["ALL"]}
         });
     Nofification.initsql = initsql;
     return Nofification;

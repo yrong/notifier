@@ -1,7 +1,7 @@
 {
 	"info": {
 		"name": "notifier",
-		"_postman_id": "e73ea611-0e96-d341-9a0e-b6617b1aa1fa",
+		"_postman_id": "880ef7e9-a4bc-cec4-e0ef-de24ea8d0f71",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -49,6 +49,37 @@
 						"auth",
 						"login"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/hidden",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"hidden"
+					]
 				},
 				"description": ""
 			},
@@ -95,8 +126,7 @@
 						"v1",
 						"articles"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -139,8 +169,7 @@
 						"notifications",
 						"search"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -183,8 +212,7 @@
 						"notifications",
 						"search"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -230,8 +258,7 @@
 						"notifications",
 						"search"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -272,8 +299,7 @@
 						"notifications",
 						"{{notification_id}}"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -318,8 +344,7 @@
 						"notifications",
 						"search"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -360,8 +385,7 @@
 						"notifications",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -412,8 +436,7 @@
 						"api",
 						"notifications"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -460,8 +483,99 @@
 						"notifications",
 						"search"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login with test user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c5256bf-154b-471c-a34b-c2629ed93b41",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"token found\"] = jsonData.data.token;",
+							"postman.setEnvironmentVariable(\"test_token\", jsonData.data.token);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\":\"test\",\n  \"password\":\"test\"\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{auth_api_host}}"
+					],
+					"port": "{{auth_api_port}}",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search only subscribed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c18c451e-a3c1-4888-a820-89c280b1894b",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"notification found\"] = (jsonData.rows.length >= 1)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{test_token}}\",\n  \"subscribe\":true,\n  \"filter\":\n  {\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				}
 			},
 			"response": []
 		}
