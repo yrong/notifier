@@ -7,6 +7,7 @@ const uuid_validator = require('uuid-validate')
 
 const notificationMapping = async function(notification){
     notification.actor = notification.user
+    notification.actor.alias = notification.user.name
     notification = _.omit(notification,['notified_user','user','subscribe_user','subscribe_role','updatedAt'])
     notification.old = await notificationObjectMapping(notification.old)
     notification.new = await notificationObjectMapping(notification.new)
