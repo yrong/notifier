@@ -621,6 +621,49 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "search by process_flow_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"article timeline found\"] = (jsonData.rows.length >= 1)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{incident_flow_1_id}}\"},{\"old.uuid\": \"{{incident_flow_1_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
