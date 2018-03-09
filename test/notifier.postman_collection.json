@@ -49,7 +49,8 @@
 						"auth",
 						"login"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -126,7 +127,8 @@
 						"v1",
 						"articles"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -169,7 +171,8 @@
 						"notifications",
 						"search"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -212,7 +215,8 @@
 						"notifications",
 						"search"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -258,7 +262,8 @@
 						"notifications",
 						"search"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -299,7 +304,8 @@
 						"notifications",
 						"{{notification_id}}"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -344,7 +350,8 @@
 						"notifications",
 						"search"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -385,7 +392,8 @@
 						"notifications",
 						""
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -436,7 +444,8 @@
 						"api",
 						"notifications"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -483,7 +492,8 @@
 						"notifications",
 						"search"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -531,7 +541,8 @@
 						"auth",
 						"login"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -575,7 +586,8 @@
 						"notifications",
 						"search"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
@@ -618,12 +630,13 @@
 						"notifications",
 						"search"
 					]
-				}
+				},
+				"description": null
 			},
 			"response": []
 		},
 		{
-			"name": "search by process_flow_id",
+			"name": "search by processFlow id",
 			"event": [
 				{
 					"listen": "test",
@@ -661,7 +674,52 @@
 						"notifications",
 						"search"
 					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "search by configurationItem id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"article timeline found\"] = (jsonData.rows.length >= 1)"
+						]
+					}
 				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{router_id}}\"},{\"old.uuid\": \"{{router_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				},
+				"description": null
 			},
 			"response": []
 		}
