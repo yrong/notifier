@@ -11,12 +11,7 @@ const logger = Logger.getLogger()
  */
 const db = require('sequelize-wrapper-advanced')
 db.init(config.get('postgres-notification'))
-db.NotificationName = 'Notification'
-const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port'),dbname:process.env['SCHEMA_TYPE']}
-const cache_url_key = `${process.env['SCHEMA_TYPE']}_url`
-const port = config.get(`${process.env['SCHEMA_TYPE']}.port`)
-const cache_loadUrl = {}
-cache_loadUrl[cache_url_key]=`http://${config.get('privateIP') || 'localhost'}:${port}/api`
+const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
 
 /**
  * init middlewares
@@ -41,13 +36,13 @@ app.use(acl_checker({redisOption}))
 const router = require('./routes')
 app.use(router.routes())
 const IO = require( 'koa-socket' )
-const notification_io = new IO(db.NotificationName)
+const notification_io = new IO('Notification')
 notification_io.attach(app)
 
 /**
  * start server
  */
-scirichon_cache.initialize({loadUrl: cache_loadUrl,redisOption,prefix:process.env['SCHEMA_TYPE']})
+scirichon_cache.initialize({redisOption,prefix:process.env['SCHEMA_TYPE']})
 app.listen(config.get('notifier.port'), () => {
     logger.info('App started')
 })

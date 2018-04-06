@@ -3,14 +3,14 @@ const notifications = new Router()
 const _ = require('lodash')
 const models = require('sequelize-wrapper-advanced').models
 const db_helper = require('../helper/db_helper')
-const Notification = require('sequelize-wrapper-advanced').NotificationName
 const resultMapping = require('../helper/resultMapping')
 const common = require('scirichon-common')
+const NotificationType = 'Notification'
 
 const search_processor = async function(ctx) {
     let user_id = ctx[common.TokenUserName].uuid,roles = ctx[common.TokenUserName].roles,
         query =_.assign({},ctx.params,ctx.query,ctx.request.body),
-        model = models[Notification], result,mapped_rows = []
+        model = models[NotificationType], result,mapped_rows = []
     if(query.read == false){
         query.filter = _.merge(query.filter,{$not:{notified_user:{$contains:[user_id]}}})
     }
@@ -34,13 +34,13 @@ const post_processor = async function(ctx) {
     if(!notification.user){
         notification.user = ctx[common.TokenUserName]
     }
-    notification = await models[Notification].create(notification);
-    ctx.app[Notification].broadcast(Notification,notification)
+    notification = await models[NotificationType].create(notification);
+    ctx.app[NotificationType].broadcast(NotificationType,notification)
     ctx.body = {uuid: notification.uuid}
 }
 
 const update_processor = async function(ctx) {
-    let user_id = ctx[common.TokenUserName].uuid,notified_user,obj,model=models[Notification],update_obj = ctx.request.body
+    let user_id = ctx[common.TokenUserName].uuid,notified_user,obj,model=models[NotificationType],update_obj = ctx.request.body
     obj = await model.findOne({
         where: {
             uuid: ctx.params.uuid
