@@ -15,7 +15,7 @@ const search_processor = async function(ctx) {
         query.filter = _.merge(query.filter,{$not:{notified_user:{$contains:[user_id]}}})
     }
     if(query.subscribe == true){
-        query.filter = _.merge(query.filter,{$or:[{subscribe_user:{$contains:["ALL"]}},{subscribe_user:{$contains:[user_id]}},{subscribe_role:{$contains:roles}}]})
+        query.filter = _.merge(query.filter,{$or:[{subscribe_user:{$contains:[user_id]}},{subscribe_role:{$contains:roles}}]})
     }
     query = common.buildQueryCondition(query)
     result = await model.findAndCountAll(query)
