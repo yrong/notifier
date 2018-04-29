@@ -19,12 +19,10 @@ const search_processor = async function(ctx) {
     }
     query = common.buildQueryCondition(query)
     result = await model.findAndCountAll(query)
-    console.log('from db:' + JSON.stringify(result,null,'\t'))
     if(result&&result.rows){
         for(let row of result.rows){
             try{
                 row = await resultMapping.notificationMapping(row)
-                console.log("after mapping:" + JSON.stringify(row,null,'\t'))
                 mapped_rows.push(row)
             }catch(err){
                 console.log(err.stack||err)
