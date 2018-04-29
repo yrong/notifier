@@ -21,7 +21,11 @@ const search_processor = async function(ctx) {
     result = await model.findAndCountAll(query)
     if(result&&result.rows){
         for(let row of result.rows){
-            row = await resultMapping.notificationMapping(row)
+            try{
+                row = await resultMapping.notificationMapping(row)
+            }catch(err){
+                console.log(err.stack||err)
+            }
             mapped_rows.push(row)
         }
         result.rows = mapped_rows
