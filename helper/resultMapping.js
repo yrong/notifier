@@ -4,7 +4,7 @@ const config = require('config')
 const scirichon_response_mapper = require('scirichon-response-mapper')
 
 const notificationMapping = async function(notification){
-    notification.actor = notification.user
+    notification.actor = _.omit(notification.user,'token')
     notification = _.omit(notification,['notified_user','user','subscribe_user','subscribe_role','updatedAt'])
     notification.old = await notificationObjectMapping(notification.old)
     notification.new = await notificationObjectMapping(notification.new)
@@ -31,6 +31,8 @@ const notificationObjectMapping = async function(obj) {
         if(obj.category) {
             try{
                 obj = await scirichon_response_mapper.referencedObjectMapper(obj)
+                if(obj.subscriber)
+                    obj.subscriber = _.omit(obj.subscriber,'token')
             }catch(err){
                 console.log(err.stack||err)
             }
