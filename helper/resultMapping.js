@@ -29,7 +29,11 @@ const notificationObjectMapping = async function(obj) {
             }
         }
         if(obj.category) {
-            obj = await scirichon_response_mapper.referencedObjectMapper(obj)
+            try{
+                obj = await scirichon_response_mapper.referencedObjectMapper(obj)
+            }catch(err){
+                console.log(err.stack||err)
+            }
         }
     }
     return obj
