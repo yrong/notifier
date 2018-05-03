@@ -3538,15 +3538,6 @@ redis-crud-fork@1.0.0-beta.8:
   version "1.0.0-beta.8"
   resolved "https://registry.npmjs.org/redis-crud-fork/-/redis-crud-fork-1.0.0-beta.8.tgz#6ff803b251f092bb7a5d108c75d24f43b30fd057"
 
-redis-json-schema@1.0.2-beta.4:
-  version "1.0.2-beta.4"
-  resolved "https://registry.npmjs.org/redis-json-schema/-/redis-json-schema-1.0.2-beta.4.tgz#ae77a964a35cd00ad96b5f5671f80eb2bccc2cf3"
-  dependencies:
-    ajv "^5.3.0"
-    lodash "^4.17.4"
-    redis "^2.8.0"
-    redis-crud-fork "1.0.0-beta.8"
-
 redis-parser@^2.6.0:
   version "2.6.0"
   resolved "https://registry.npmjs.org/redis-parser/-/redis-parser-2.6.0.tgz#52ed09dacac108f1a631c07e9b69941e7a19504b"
@@ -3767,17 +3758,17 @@ scirichon-acl-checker@1.0.2-beta.2:
     redis "^2.8.0"
     scirichon-common "1.0.2-beta.4"
 
-scirichon-cache@1.0.6-beta.8:
-  version "1.0.6-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.6-beta.8.tgz#fca791e372526ae512e2b55c54983fdd16e063b8"
+scirichon-cache@1.0.7-beta.2:
+  version "1.0.7-beta.2"
+  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.7-beta.2.tgz#125fc943c303bb8c28c4cdf3d2f15a8f35a5c926"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     node-cache-redis-fork "2.2.0-beta.3"
-    redis-json-schema "1.0.2-beta.4"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "1.0.2-beta.4"
+    scirichon-common "1.0.2-beta.7"
+    scirichon-json-schema "1.0.2-beta.4"
     uuid-validate "0.0.2"
 
 scirichon-common@1.0.2-beta.4:
@@ -3789,14 +3780,41 @@ scirichon-common@1.0.2-beta.4:
     request "^2.81.0"
     request-promise "^4.1.1"
 
-scirichon-response-mapper@1.0.1-beta.8:
-  version "1.0.1-beta.8"
-  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.1-beta.8.tgz#2eae0649824faff2bd04663a76cdce5720e1b17b"
+scirichon-common@1.0.2-beta.7:
+  version "1.0.2-beta.7"
+  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.2-beta.7.tgz#03dba99b6d9187dd9b4769bfb1a109138e8bf549"
+  dependencies:
+    config "^1.25.1"
+    lodash "^4.17.4"
+    request "^2.81.0"
+    request-promise "^4.1.1"
+
+scirichon-common@1.0.2-beta.8:
+  version "1.0.2-beta.8"
+  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.2-beta.8.tgz#37e63df5478683b21f1d42890822f08cecdb6846"
+  dependencies:
+    config "^1.25.1"
+    lodash "^4.17.4"
+    request "^2.81.0"
+    request-promise "^4.1.1"
+
+scirichon-json-schema@1.0.2-beta.4:
+  version "1.0.2-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-json-schema/-/scirichon-json-schema-1.0.2-beta.4.tgz#5d64723d32555f0750713e095d64606764c831d4"
+  dependencies:
+    ajv "^5.3.0"
+    lodash "^4.17.4"
+    redis "^2.8.0"
+    redis-crud-fork "1.0.0-beta.8"
+
+scirichon-response-mapper@1.0.2-beta.4:
+  version "1.0.2-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.2-beta.4.tgz#e35e8ec364ac415f179af667030ddc48f85e4de1"
   dependencies:
     lodash "^4.17.4"
-    redis-json-schema "1.0.2-beta.4"
-    scirichon-cache "1.0.6-beta.8"
-    scirichon-common "1.0.2-beta.4"
+    scirichon-cache "1.0.7-beta.2"
+    scirichon-common "1.0.2-beta.8"
+    scirichon-json-schema "1.0.2-beta.4"
 
 scirichon-response-wrapper@1.0.0-beta.9:
   version "1.0.0-beta.9"
@@ -3805,15 +3823,15 @@ scirichon-response-wrapper@1.0.0-beta.9:
     lodash "^4.17.4"
     log4js_wrapper "1.0.3-beta.5"
 
-scirichon-token-checker@1.0.1-beta.2:
-  version "1.0.1-beta.2"
-  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.1-beta.2.tgz#9b9f3cdc8fd6ca9346f531fdffae584268a088e0"
+scirichon-token-checker@1.0.1-beta.3:
+  version "1.0.1-beta.3"
+  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.1-beta.3.tgz#42f44e0cba80ab772f31168784b1d936c4bded6a"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "1.0.2-beta.4"
+    scirichon-common "1.0.2-beta.8"
 
 "semver@2 || 3 || 4 || 5", semver@5.4.1, semver@^5.0.1, semver@^5.3.0:
   version "5.4.1"

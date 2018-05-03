@@ -9,26 +9,27 @@ const NotificationType = 'Notification'
 
 const search_processor = async function(ctx) {
     let user_id = ctx[common.TokenUserName].uuid,roles = ctx[common.TokenUserName].roles,
-        query =_.assign({},ctx.params,ctx.query,ctx.request.body),
-        model = models[NotificationType], result,mapped_rows = []
-    if(query.read == false){
-        query.filter = _.merge(query.filter,{$not:{notified_user:{$contains:[user_id]}}})
+        params =_.assign({},ctx.params,ctx.query,ctx.request.body),query,
+        model = models[NotificationType],result,row,rows = [],notification
+    if(params.read == false){
+        params.filter = _.merge(params.filter,{$not:{notified_user:{$contains:[user_id]}}})
     }
-    if(query.subscribe == true){
-        query.filter = _.merge(query.filter,{$or:[{subscribe_user:{$contains:[user_id]}},{subscribe_role:{$contains:roles}}]})
+    if(params.subscribe == true){
+        params.filter = _.merge(params.filter,{$or:[{subscribe_user:{$contains:[user_id]}},{subscribe_role:{$contains:roles}}]})
     }
-    query = common.buildQueryCondition(query)
+    query = common.buildQueryCondition(params)
+    query.attributes = params.attributes||{}
     result = await model.findAndCountAll(query)
     if(result&&result.rows){
-        for(let row of result.rows){
+        for(row of result.rows){
             try{
-                row = await resultMapping.notificationMapping(row)
-                mapped_rows.push(row)
+                notification = await resultMapping.notificationMapping(row,params)
             }catch(err){
                 console.log(err.stack||err)
             }
+            rows.push(notification||row)
         }
-        result.rows = mapped_rows
+        result.rows = rows
     }
     ctx.body = result
 }

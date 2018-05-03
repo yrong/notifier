@@ -19,7 +19,8 @@ const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')
 const Koa = require('koa')
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
-const scirichon_cache = require('scirichon-cache')
+const scirichonCache = require('scirichon-cache')
+const scirichonResponseMapper = require('scirichon-response-mapper')
 const responseWrapper = require('scirichon-response-wrapper')
 const check_token = require('scirichon-token-checker')
 const acl_checker = require('scirichon-acl-checker')
@@ -42,9 +43,15 @@ notification_io.attach(app)
 /**
  * start server
  */
-scirichon_cache.initialize({redisOption,prefix:process.env['SCHEMA_TYPE']})
-app.listen(config.get('notifier.port'), () => {
-    logger.info('App started')
+const initializeComponents = async ()=>{
+    let schema_option = {redisOption,prefix:process.env['SCHEMA_TYPE']}
+    await scirichonCache.initialize(schema_option)
+    await scirichonResponseMapper.initialize(schema_option)
+}
+initializeComponents().then(()=>{
+    app.listen(config.get('notifier.port'), () => {
+        logger.info('App started')
+    })
 })
 
 process.on('uncaughtException', (err) => {
