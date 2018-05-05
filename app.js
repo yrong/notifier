@@ -10,7 +10,7 @@ const logger = Logger.getLogger()
  * init db schema
  */
 const db = require('sequelize-wrapper-advanced')
-db.init(config.get('postgres-notification'))
+db.init(config.get('postgres-'+process.env['NODE_NAME']))
 const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,port:config.get('redis.port')}
 
 /**

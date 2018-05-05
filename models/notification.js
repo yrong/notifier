@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
     var Nofification = sequelize.define("Notification",
         {
             uuid: {type: DataTypes.UUID, allowNull: false, primaryKey: true,defaultValue: DataTypes.UUIDV4},
-            user:{type: DataTypes.JSONB,allowNull: false},
+            user:{type: DataTypes.JSONB},
             action:{type: DataTypes.STRING, allowNull: false},
             old:{type: DataTypes.JSONB},
             new:{type: DataTypes.JSONB},

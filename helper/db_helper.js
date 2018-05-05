@@ -1,6 +1,6 @@
 var Pool = require('pg-pool')
 var config = require('config')
-var pg_config=config.get('postgres-notification')
+var pg_config=config.get('postgres-'+process.env['NODE_NAME'])
 var pool = new Pool(pg_config)
 
 const executeSql = async (sql)=>{
