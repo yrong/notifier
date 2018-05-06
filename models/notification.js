@@ -12,6 +12,7 @@ DO $$
             EXCEPTION
                 WHEN duplicate_column THEN RAISE NOTICE 'column "subscribe_role" already exists in Notifications.';
             END;
+            ALTER TABLE "Notifications" ALTER COLUMN "user" DROP NOT NULL; 
         END;
   $$;  `
 
