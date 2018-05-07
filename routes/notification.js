@@ -44,6 +44,17 @@ const post_processor = async function(ctx) {
     ctx.body = {uuid: notification.uuid}
 }
 
+const batch_processor = async (ctx)=>{
+    let notifications = ctx.request.body,result
+    notifications = _.map(notifications,(notification)=>{
+        notification.user = notification.user||ctx[common.TokenUserName]
+        return notification
+    })
+    result = await models[NotificationType].bulkCreate(notifications)
+    ctx.app[NotificationType].broadcast(NotificationType,notifications)
+    ctx.body = {uuid:_.map(result,(val)=>val.uuid)}
+}
+
 const update_processor = async function(ctx) {
     let user_id = ctx[common.TokenUserName].uuid,notified_user,obj,model=models[NotificationType],update_obj = ctx.request.body
     obj = await model.findOne({
@@ -70,6 +81,7 @@ const batch_update_notified_user = async function(ctx) {
 
 
 notifications.post('/',post_processor)
+notifications.post('/batch',batch_processor)
 notifications.put('/:uuid',update_processor)
 notifications.post('/search',search_processor)
 notifications.put('/',batch_update_notified_user)

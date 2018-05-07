@@ -162,7 +162,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"type\":\"Vehicle\",\n    \"source\":\"vehicle\",\n    \"action\":\"CREATE\"\n  },\n   \"page\":1,\n  \"per_page\":10,\n  \"attributes\": [\"new\"]\n}\n"
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"type\":\"Order\",\n    \"source\":\"vehicle\",\n    \"action\":\"CREATE\"\n  },\n   \"page\":1,\n  \"per_page\":10,\n  \"attributes\": [\"new\"]\n}\n"
 				},
 				"url": {
 					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
@@ -406,6 +406,58 @@
 					"path": [
 						"api",
 						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "batch add notification",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d724a5be-d1dc-41cc-8ce6-919d78ccdb94",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"jsonData = jsonData.data||jsonData;",
+							"tests[\"uuid found\"] = jsonData.uuid;",
+							"if(jsonData.uuid){",
+							"   postman.setEnvironmentVariable(\"notification_id\", jsonData.uuid); ",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t  \"action\":\"create\",\n\t  \"new\":{\"subscriber\":\"{{auth_user_id}}\",\"occurrence_date\":1511936480773},\n\t  \"type\":\"Order\",\n\t  \"source\":\"api\",\n\t  \"additional\":{\"a\":1,\"b\":true}\n\t},\n\t{\n\t  \"action\":\"create\",\n\t  \"new\":{\"subscriber\":\"{{auth_user_id}}\",\"occurrence_date\":1511936503376},\n\t  \"type\":\"Vehicle\",\n\t  \"source\":\"api\",\n\t  \"additional\":{\"a\":2,\"b\":false}\n\t}\n]\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/batch",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"batch"
 					]
 				}
 			},
