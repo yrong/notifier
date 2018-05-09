@@ -3749,14 +3749,14 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
-scirichon-acl-checker@1.0.2-beta.2:
-  version "1.0.2-beta.2"
-  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.2-beta.2.tgz#f102e87115c252a0146f9144980b92af8d3d77ad"
+scirichon-acl-checker@1.0.2-beta.3:
+  version "1.0.2-beta.3"
+  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.2-beta.3.tgz#c6414e455e0a576e124fbf97bd2b4e5eb4ebfc99"
   dependencies:
     acl-fork "0.4.10-beta.3"
     lodash "^4.17.4"
     redis "^2.8.0"
-    scirichon-common "1.0.2-beta.4"
+    scirichon-common "1.0.2-beta.8"
 
 scirichon-cache@1.0.7-beta.3:
   version "1.0.7-beta.3"
@@ -3770,15 +3770,6 @@ scirichon-cache@1.0.7-beta.3:
     scirichon-common "1.0.2-beta.7"
     scirichon-json-schema "1.0.2-beta.4"
     uuid-validate "0.0.2"
-
-scirichon-common@1.0.2-beta.4:
-  version "1.0.2-beta.4"
-  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.2-beta.4.tgz#8bab1b851ec101fa64b182339b573aa30b91d260"
-  dependencies:
-    config "^1.25.1"
-    lodash "^4.17.4"
-    request "^2.81.0"
-    request-promise "^4.1.1"
 
 scirichon-common@1.0.2-beta.7:
   version "1.0.2-beta.7"
