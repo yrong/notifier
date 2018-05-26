@@ -19,6 +19,7 @@ const redisOption = {host:`${process.env['REDIS_HOST']||config.get('redis.host')
 const Koa = require('koa')
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
+const common = require('scirichon-common')
 const scirichonCache = require('scirichon-cache')
 const scirichonResponseMapper = require('scirichon-response-mapper')
 const responseWrapper = require('scirichon-response-wrapper')
@@ -28,7 +29,7 @@ const app = new Koa();
 app.use(cors({ credentials: true }))
 app.use(bodyParser())
 app.use(responseWrapper())
-app.use(check_token({check_token_url:`http://${config.get('privateIP')||'localhost'}:${config.get('auth.port')}/auth/check`}))
+app.use(check_token({check_token_url:`${common.getServiceApiUrl('auth')}/auth/check`}))
 app.use(acl_checker({redisOption}))
 
 /**
