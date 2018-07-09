@@ -2,7 +2,7 @@
  * init logger
  */
 const config = require('config')
-const Logger = require('log4js_wrapper')
+const Logger = require('log4js-wrapper-advanced')
 Logger.initialize(config.get('logger'))
 const logger = Logger.getLogger()
 
