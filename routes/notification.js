@@ -8,13 +8,13 @@ const common = require('scirichon-common')
 const NotificationType = 'Notification'
 
 const search_processor = async function(ctx) {
-    let user_id = ctx[common.TokenUserName].uuid,roles = ctx[common.TokenUserName].roles,
+    let user = ctx[common.TokenUserName],user_id = user&&user.uuid,roles = user&&user.roles,
         params =_.assign({},ctx.params,ctx.query,ctx.request.body),query,
         model = models[NotificationType],result,row,rows = [],notification
-    if(params.read == false){
+    if(params.read == false&&user_id){
         params.filter = _.merge(params.filter,{$not:{notified_user:{$contains:[user_id]}}})
     }
-    if(params.subscribe == true){
+    if(params.subscribe == true&&user_id){
         params.filter = _.merge(params.filter,{$or:[{subscribe_user:{$contains:[user_id]}},{subscribe_role:{$contains:roles}}]})
     }
     query = common.buildQueryCondition(params)
