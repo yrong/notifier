@@ -1,8 +1,7 @@
 {
 	"info": {
+		"_postman_id": "c9191d8c-9056-4ec9-ad7f-ad0321cc5a48",
 		"name": "notifier",
-		"_postman_id": "7bb45324-dc1a-6708-361a-062d6bc11311",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -88,21 +87,22 @@
 			"response": []
 		},
 		{
-			"name": "add model1 to shopping cart",
+			"name": "add notification",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "d724a5be-d1dc-41cc-8ce6-919d78ccdb94",
+						"type": "text/javascript",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"jsonData = jsonData.data||jsonData;",
 							"tests[\"uuid found\"] = jsonData.uuid;",
 							"if(jsonData.uuid){",
-							"postman.setEnvironmentVariable(\"order_id\", jsonData.uuid);",
+							"   postman.setEnvironmentVariable(\"notification_id\", jsonData.uuid); ",
 							"}",
 							""
-						],
-						"type": "text/javascript"
+						]
 					}
 				}
 			],
@@ -120,18 +120,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r  \"token\": \"{{token}}\",\r  \"data\":{\r    \"category\":\"Order\",\r    \"fields\":{\r      \"status\":\"to_be_approved\",\r      \"subscriber\":\"{{test_user_id}}\",\r      \"sale_date\":1511936480773,\r      \"entries\":[{\"brand\":\"{{brand_1_id}}\",\"model\":\"{{model_1_id}}\",\"exterior\":\"{{exterior_1_id}}\",\"interior\":\"{{interior_1_id}}\",\"style\":\"{{style_1_id}}\",\"price\":90000,\"quantity\":1,\"warehouse\":\"{{warehouse_2_id}}\",\"planned\":{{order_planned_model1_1st}}}]\r    },\r    \"notification\":{\r    \t\"subscribe_role\":[\"contributor\"],\r    \t\"additional\":{\"a\":1,\"b\":true}\r    }\r  }\r}"
+					"raw": "\n{\n  \"action\":\"CREATE\",\n  \"new\":{\"subscriber\":\"{{auth_user_id}}\",\"occurrence_date\":1511936480773},\n  \"type\":\"Order\",\n  \"source\":\"api\",\n  \"additional\":{\"a\":1,\"b\":true}\n}\n"
 				},
 				"url": {
-					"raw": "http://{{vehicle_api_host}}:{{vehicle_api_port}}/api/orders",
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications",
 					"protocol": "http",
 					"host": [
-						"{{vehicle_api_host}}"
+						"{{notifier_api_host}}"
 					],
-					"port": "{{vehicle_api_port}}",
+					"port": "{{notifier_api_port}}",
 					"path": [
 						"api",
-						"orders"
+						"notifications"
 					]
 				}
 			},
@@ -162,7 +162,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"type\":\"Order\",\n    \"source\":\"vehicle\",\n    \"action\":\"CREATE\"\n  },\n   \"page\":1,\n  \"per_page\":10,\n  \"attributes\": [\"new\"]\n}\n"
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"source\":\"api\",\n    \"type\":\"Order\",\n    \"action\":\"CREATE\"\n  },\n   \"page\":1,\n  \"per_page\":10\n\n}\n"
 				},
 				"url": {
 					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
@@ -225,8 +225,7 @@
 					"query": [
 						{
 							"key": "original",
-							"value": "true",
-							"equals": true
+							"value": "true"
 						}
 					]
 				}
@@ -355,57 +354,6 @@
 						"api",
 						"notifications",
 						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add notification",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d724a5be-d1dc-41cc-8ce6-919d78ccdb94",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"jsonData = jsonData.data||jsonData;",
-							"tests[\"uuid found\"] = jsonData.uuid;",
-							"if(jsonData.uuid){",
-							"   postman.setEnvironmentVariable(\"notification_id\", jsonData.uuid); ",
-							"}",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "token",
-						"value": "{{token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "\n{\n  \"action\":\"create\",\n  \"new\":{\"subscriber\":\"{{auth_user_id}}\",\"occurrence_date\":1511936480773},\n  \"type\":\"Order\",\n  \"source\":\"api\",\n  \"additional\":{\"a\":1,\"b\":true}\n}\n"
-				},
-				"url": {
-					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications",
-					"protocol": "http",
-					"host": [
-						"{{notifier_api_host}}"
-					],
-					"port": "{{notifier_api_port}}",
-					"path": [
-						"api",
-						"notifications"
 					]
 				}
 			},
@@ -606,11 +554,10 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6d0452d2-b2cc-470f-a1f5-02af17d905da",
 						"type": "text/javascript",
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"jsonData = jsonData.data||jsonData;",
-							"tests[\"article timeline found\"] = (jsonData.rows.length >= 1)"
+							""
 						]
 					}
 				}
