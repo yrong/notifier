@@ -3758,27 +3758,18 @@ scirichon-acl-checker@1.0.9-beta.2:
     redis "^2.8.0"
     scirichon-common "1.0.7-beta.2"
 
-scirichon-cache@1.0.11-beta.3:
-  version "1.0.11-beta.3"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.11-beta.3.tgz#d17ae7fe97b5a6d223a095d34cb474d562096209"
+scirichon-cache@1.0.11-beta.4:
+  version "1.0.11-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.11-beta.4.tgz#f725cab7eba4bad0ef460c1b0d8ab7c7cbd1ab04"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     node-cache-redis-fork "^2.2.2"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "1.0.7-beta.1"
+    scirichon-common "1.0.7-beta.2"
     scirichon-json-schema "1.0.3-beta.1"
     uuid-validate "^0.0.2"
-
-scirichon-common@1.0.7-beta.1:
-  version "1.0.7-beta.1"
-  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.7-beta.1.tgz#0138fbc56e4092bed308e904d7ad4320ad58b82a"
-  dependencies:
-    config "^1.25.1"
-    lodash "^4.17.4"
-    request "^2.81.0"
-    request-promise "^4.1.1"
 
 scirichon-common@1.0.7-beta.2:
   version "1.0.7-beta.2"
@@ -3798,12 +3789,12 @@ scirichon-json-schema@1.0.3-beta.1:
     redis "^2.8.0"
     redis-crud-fork "^1.0.1"
 
-scirichon-response-mapper@1.0.7-beta.4:
-  version "1.0.7-beta.4"
-  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.7-beta.4.tgz#9779cfd23ee1a76391347da40ecb238606f06362"
+scirichon-response-mapper@1.0.7-beta.6:
+  version "1.0.7-beta.6"
+  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.7-beta.6.tgz#9af4c853c7b3ca39a1fdf43351de1c9344326480"
   dependencies:
     lodash "^4.17.4"
-    scirichon-cache "1.0.11-beta.3"
+    scirichon-cache "1.0.11-beta.4"
     scirichon-common "1.0.7-beta.2"
     scirichon-json-schema "1.0.3-beta.1"
 

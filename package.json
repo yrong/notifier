@@ -32,8 +32,8 @@
     "scirichon-token-checker": "1.0.7-beta.2",
     "scirichon-acl-checker": "1.0.9-beta.2",
     "scirichon-json-schema": "1.0.3-beta.1",
-    "scirichon-cache": "1.0.11-beta.3",
-    "scirichon-response-mapper": "1.0.7-beta.4"
+    "scirichon-cache": "1.0.11-beta.4",
+    "scirichon-response-mapper": "1.0.7-beta.6"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"
