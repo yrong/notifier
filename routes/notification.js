@@ -6,6 +6,8 @@ const db_helper = require('../helper/db_helper')
 const resultMapping = require('../helper/resultMapping')
 const common = require('scirichon-common')
 const NotificationType = 'Notification'
+const config = require('config')
+common.TokenUserName = config.get('auth.userFieldName')
 
 const search_processor = async function(ctx) {
     let user = ctx[common.TokenUserName],user_id = user&&user.uuid,roles = user&&user.roles,

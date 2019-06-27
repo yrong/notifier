@@ -21,16 +21,14 @@ const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const common = require('scirichon-common')
 const scirichonCache = require('scirichon-cache')
-const scirichonResponseMapper = require('scirichon-response-mapper')
 const responseWrapper = require('scirichon-response-wrapper')
-const check_token = require('scirichon-token-checker')
-const acl_checker = require('scirichon-acl-checker')
+const authenticator = require('scirichon-authenticator')
 const app = new Koa();
 app.use(cors({ credentials: true }))
 app.use(bodyParser())
 app.use(responseWrapper())
-app.use(check_token({check_token_url:`${common.getServiceApiUrl('auth')}/auth/check`}))
-app.use(acl_checker({redisOption}))
+app.use(authenticator.checkToken({check_token_url:`${common.getServiceApiUrl('auth')}/auth/check`}))
+app.use(authenticator.checkAcl({redisOption}))
 
 /**
  * init routes
@@ -47,7 +45,6 @@ notification_io.attach(app)
 const initializeComponents = async ()=>{
     let schema_option = {redisOption,prefix:process.env['SCHEMA_TYPE']}
     await scirichonCache.initialize(schema_option)
-    await scirichonResponseMapper.initialize(schema_option)
 }
 initializeComponents().then(()=>{
     app.listen(config.get('notifier.port'), () => {

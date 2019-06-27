@@ -8,3 +8,5 @@ wheels
 logs
 build
 config
+/test/index.js
+/test/postman_globals.json

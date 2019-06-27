@@ -489,10 +489,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"username\":\"test\",\n  \"password\":\"test\"\n}"
+					"raw": "{\n  \"username\":\"{{auth_ldap_user}}\",\n  \"password\":\"{{auth_ldap_passwd}}\"\n}"
 				},
 				"url": {
-					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
 					"protocol": "http",
 					"host": [
 						"{{auth_api_host}}"
@@ -500,7 +500,7 @@
 					"port": "{{auth_api_port}}",
 					"path": [
 						"auth",
-						"login"
+						"login-ldap"
 					]
 				}
 			},
@@ -531,48 +531,6 @@
 				"body": {
 					"mode": "raw",
 					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"subscribe\":true,\n  \"filter\":\n  {\n  },\n   \"page\":1,\n  \"per_page\":10\n}\n"
-				},
-				"url": {
-					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
-					"protocol": "http",
-					"host": [
-						"{{notifier_api_host}}"
-					],
-					"port": "{{notifier_api_port}}",
-					"path": [
-						"api",
-						"notifications",
-						"search"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "search by order_id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "6d0452d2-b2cc-470f-a1f5-02af17d905da",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{order_id}}\"},{\"old.uuid\": \"{{order_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
 				},
 				"url": {
 					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
@@ -657,6 +615,48 @@
 				"body": {
 					"mode": "raw",
 					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{router_id}}\"},{\"old.uuid\": \"{{router_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
+				},
+				"url": {
+					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
+					"protocol": "http",
+					"host": [
+						"{{notifier_api_host}}"
+					],
+					"port": "{{notifier_api_port}}",
+					"path": [
+						"api",
+						"notifications",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search by order_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d0452d2-b2cc-470f-a1f5-02af17d905da",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{order_id}}\"},{\"old.uuid\": \"{{order_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
 				},
 				"url": {
 					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
