@@ -187,14 +187,13 @@
 					"listen": "test",
 					"script": {
 						"id": "e033ba17-c2f7-42f6-972f-f147decddcdd",
-						"type": "text/javascript",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"jsonData = jsonData.data||jsonData;",
 							"tests[\"notification found\"] = (jsonData.rows.length >= 1)",
-							"postman.setEnvironmentVariable(\"notification_id\", jsonData.rows[0].uuid);",
 							"postman.setEnvironmentVariable(\"notification_unread_count\", jsonData.count);"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -459,19 +458,19 @@
 			"response": []
 		},
 		{
-			"name": "login with test user",
+			"name": "login with other user",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "5d45d963-0d9f-4827-92f3-acdbfddd4a6d",
-						"type": "text/javascript",
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"token found\"] = jsonData.data.token;",
 							"postman.setEnvironmentVariable(\"token\", jsonData.data.token);",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -489,10 +488,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"username\":\"{{auth_ldap_user}}\",\n  \"password\":\"{{auth_ldap_passwd}}\"\n}"
+					"raw": "{\n  \"username\":\"superadmin\",\n  \"password\":\"superadmin\"\n}\n"
 				},
 				"url": {
-					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login-ldap",
+					"raw": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
 					"protocol": "http",
 					"host": [
 						"{{auth_api_host}}"
@@ -500,7 +499,7 @@
 					"port": "{{auth_api_port}}",
 					"path": [
 						"auth",
-						"login-ldap"
+						"login"
 					]
 				}
 			},
@@ -549,49 +548,7 @@
 			"response": []
 		},
 		{
-			"name": "search by processFlow id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "551f4b51-1520-49ab-aca4-17679a038a71",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{incident_flow_1_id}}\"},{\"old.uuid\": \"{{incident_flow_1_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
-				},
-				"url": {
-					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
-					"protocol": "http",
-					"host": [
-						"{{notifier_api_host}}"
-					],
-					"port": "{{notifier_api_port}}",
-					"path": [
-						"api",
-						"notifications",
-						"search"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "search by configurationItem id",
+			"name": "search by uuid",
 			"event": [
 				{
 					"listen": "test",
@@ -633,49 +590,7 @@
 			"response": []
 		},
 		{
-			"name": "search by order_id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "6d0452d2-b2cc-470f-a1f5-02af17d905da",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "\n{\n  \"token\":\"{{token}}\",\n  \"filter\":\n  {\n    \"$or\": [{\"new.uuid\": \"{{order_id}}\"},{\"old.uuid\": \"{{order_id}}\"}]\n    \n  },\n  \"page\":1,\n  \"per_page\":3\n}\n"
-				},
-				"url": {
-					"raw": "http://{{notifier_api_host}}:{{notifier_api_port}}/api/notifications/search",
-					"protocol": "http",
-					"host": [
-						"{{notifier_api_host}}"
-					],
-					"port": "{{notifier_api_port}}",
-					"path": [
-						"api",
-						"notifications",
-						"search"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "search moved vehicles",
+			"name": "search by source and type",
 			"event": [
 				{
 					"listen": "test",
